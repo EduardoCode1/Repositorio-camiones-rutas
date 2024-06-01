@@ -8,7 +8,7 @@ const getRoute = async (start, end) => {
     const route = response.data.routes[0].geometry;
     return route;
   } catch (error) {
-    throw new Error('No se puede conectar el servicio');
+    throw new Error('No se puede conectar con el servicio de direcciones');
   }
 };
 

@@ -11,7 +11,7 @@ const geocode = async (address) => {
     const [longitude, latitude] = response.data.features[0].geometry.coordinates;
     return { latitude, longitude };
   } catch (error) {
-    throw new Error('Error para conectar el servicio');
+    throw new Error('Error al conectar con el servicio de geocodificación');
   }
 };
 
