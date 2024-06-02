@@ -1,0 +1,22 @@
+body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+#mapa { position: absolute; top: 0; bottom: 0; width: 100%; }
+#formulario { position: absolute; top: 10px; left: 10px; background: white; padding: 10px; z-index: 1; }
+#formulario input[type="text"], 
+#formulario input[type="number"] {
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+#formulario button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#formulario button:hover {
+  background-color: #0056b3;
+}

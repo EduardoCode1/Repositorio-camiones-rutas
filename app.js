@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+const fs = require('fs'); // Módulo para manejar archivos
 const geocode = require('./geocode');
 const getRoute = require('./directions');
 
@@ -28,47 +29,49 @@ app.post('/vehicles', async (req, res) => {
     const route = await getRoute(pointA, pointB);
     const vehicle = { id, status, pointA, pointB, performance: { fuelLevel, avgSpeed, totalKm } };
     vehicles.push(vehicle);
+    // Guardar los vehículos en la base de datos
+    saveData(vehicles);
     res.send({ message: 'Vehículo registrado con éxito', vehicle });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
 });
 
-// Ruta para actualizar los datos de un vehículo
-app.put('/vehicles/:id', (req, res) => {
-  const { id } = req.params;
-  const { status, pointAAddress, pointBAddress, fuelLevel, avgSpeed, totalKm } = req.body;
-  const vehicle = vehicles.find(v => v.id === id);
-  if (vehicle) {
-    vehicle.status = status;
-    vehicle.pointAAddress = pointAAddress;
-    vehicle.pointBAddress = pointBAddress;
-    vehicle.performance = { fuelLevel, avgSpeed, totalKm };
-    res.send({ message: 'Vehículo actualizado con éxito', vehicle });
-  } else {
-    res.status(404).send({ message: 'Vehículo no encontrado' });
-  }
-});
-
 // Ruta para obtener la información completa de la flota
 app.get('/vehicles', (req, res) => {
-  res.send(vehicles);
+  // Cargar los vehículos desde la base de datos
+  loadData((data) => {
+    vehicles = data;
+    res.send(vehicles);
+  });
 });
+
+// Ruta para ver el contenido de database.json
+app.get('/database', (req, res) => {
+  // Cargar los datos de database.json
+  loadData((data) => {
+    res.send(data);
+  });
+});
+
+// Función para guardar datos en la base de datos
+const saveData = (data) => {
+  const jsonData = JSON.stringify(data);
+  fs.writeFileSync('database.json', jsonData);
+};
+
+// Función para cargar datos desde la base de datos
+const loadData = (callback) => {
+  fs.readFile('database.json', (err, data) => {
+    if (err) {
+      callback([]);
+    } else {
+      const jsonData = JSON.parse(data);
+      callback(jsonData);
+    }
+  });
+};
 
 app.listen(port, () => {
   console.log(`Servidor está ejecutándose en el puerto ${port}`);
-});
-// Ruta para registrar un nuevo envío
-app.post('/register', async (req, res) => {
-  const { code, pointAAddress, pointBAddress } = req.body;
-  try {
-    const pointA = await geocode(pointAAddress);
-    const pointB = await geocode(pointBAddress);
-    const route = await getRoute(pointA, pointB);
-    const delivery = { code, pointA, pointB, pointAAddress, pointBAddress, route };
-    deliveries.push(delivery);
-    res.send({ message: 'Envío registrado con éxito', delivery });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
 });

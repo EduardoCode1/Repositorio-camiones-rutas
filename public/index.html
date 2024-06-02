@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <title>Aplicación de Gestión de Flotas de Vehículos</title>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <style>
     body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
     #mapa { position: absolute; top: 0; bottom: 0; width: 100%; }
-    #formulario { position: absolute; top: 10px; left: 10px; background: white; padding: 10px; z-index: 1; }
+    #formulario { position: absolute; top: 10px; left: 10px; background: rgba(255, 255, 255, 0.8); padding: 10px; z-index: 1; border-radius: 10px; }
   </style>
 </head>
 <body>
@@ -20,6 +21,8 @@
     <input type="number" id="avg-speed" placeholder="Velocidad Promedio (km/h)">
     <input type="number" id="total-km" placeholder="Km Totales">
     <button onclick="registrarVehiculo()">Registrar Vehículo</button>
+    <button onclick="reiniciarRutas()">Reiniciar Rutas</button>
+    <button onclick="window.open('rutas_guardadas.html', '_blank')">Ver Rutas Guardadas</button>
   </div>
   <div id='mapa'></div>
   <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
@@ -28,5 +31,8 @@
     mapboxgl.accessToken = 'pk.eyJ1Ijoid2lsbGl3b25rYSIsImEiOiJjbHdyYnVhMDIwOGd5MmlvZ3lsZnRsbTg0In0.bSSPmW9wZJj0mqVX6z3Wsg';
   </script>
   <script src="main.js"></script>
+  <div id="ruta-details">
+      </div>
+
 </body>
 </html>

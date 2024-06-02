@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas Guardadas</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Rutas Guardadas</h2>
+    <div id="tabla-rutas"></div>
+
+    <script>
+        // Aquí deberías hacer una petición al servidor para obtener las rutas guardadas
+        // La respuesta del servidor debería ser un arreglo de objetos con los detalles de cada ruta
+        var rutas = [
+            {
+                id: 1,
+                estado: "En ruta",
+                puntoA: "Dirección punto A",
+                puntoB: "Dirección punto B",
+                nivelCombustible: "Alto",
+                velocidadPromedio: "50 km/h",
+                kmTotales: "100 km"
+            },
+            {
+                id: 2,
+                estado: "Sin ruta",
+                puntoA: "Otra dirección punto A",
+                puntoB: "Otra dirección punto B",
+                nivelCombustible: "Medio",
+                velocidadPromedio: "40 km/h",
+                kmTotales: "80 km"
+            }
+        ];
+
+        var tabla = "<table>";
+        tabla += "<tr><th>ID del Vehículo</th><th>Estado</th><th>Dirección Punto A</th><th>Dirección Punto B</th><th>Nivel de Combustible</th><th>Velocidad Promedio</th><th>Km Totales</th></tr>";
+        rutas.forEach(function(ruta) {
+            tabla += "<tr>";
+            tabla += "<td>" + ruta.id + "</td>";
+            tabla += "<td>" + ruta.estado + "</td>";
+            tabla += "<td>" + ruta.puntoA + "</td>";
+            tabla += "<td>" + ruta.puntoB + "</td>";
+            tabla += "<td>" + ruta.nivelCombustible + "</td>";
+            tabla += "<td>" + ruta.velocidadPromedio + "</td>";
+            tabla += "<td>" + ruta.kmTotales + "</td>";
+            tabla += "</tr>";
+        });
+        tabla += "</table>";
+
+        document.getElementById("tabla-rutas").innerHTML = tabla;
+    </script>
+</body>
+</html>
